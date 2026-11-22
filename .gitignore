@@ -32,3 +32,6 @@ test-results/
 *.sqlite3-shm
 *.sqlite3-journal
 !*.traineddata.gz
+
+# 运行时数据目录（示例产出 examples/output 保留入库，不忽略）
+/data/

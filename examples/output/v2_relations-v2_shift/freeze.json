@@ -1,0 +1,21 @@
+{
+  "freeze_id": "766286f3bab12341d57eb2fc45d45f52b4d43b3e2dd06d704319c2753e42a190",
+  "generation_id": "gen_766286f3bab1",
+  "sample_version": "samples-v1",
+  "relation_version": "relations-v2",
+  "sample_hash": "181c128b544777545b10914bcf0563d038615edbf1ac7f97a221f46a79ced0cb",
+  "relation_hash": "b31b965f42b050c4f373b46b4ea40b2845b004c0136d88c623f60dd64c4d877a",
+  "config": {
+    "seed": 20261122,
+    "target_ratios": {
+      "train": 0.7,
+      "val": 0.15,
+      "test": 0.15
+    },
+    "train_cutoff": "2025-06-30",
+    "val_cutoff": "2025-09-30",
+    "cross_boundary_rule": "shift",
+    "relation_types": null,
+    "exhaustive_limit": 10
+  }
+}

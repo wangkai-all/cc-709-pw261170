@@ -1,0 +1,10 @@
+sample_id,subject_id,event_date,group_id,amount,channel
+s_S06_1,S06,2025-02-14,g_3193b0ffb0,307,web
+s_S06_2,S06,2025-05-30,g_3193b0ffb0,308,web
+s_S06_3,S06,2025-08-25,g_3193b0ffb0,309,web
+s_S08_1,S08,2025-01-30,g_33829b0e03,309,web
+s_S08_2,S08,2025-04-17,g_33829b0e03,310,web
+s_S08_3,S08,2025-09-02,g_33829b0e03,311,web
+s_S09_1,S09,2025-02-23,g_7e0b7c84ed,310,web
+s_S09_2,S09,2025-06-08,g_7e0b7c84ed,311,web
+s_S09_3,S09,2025-09-22,g_7e0b7c84ed,312,web

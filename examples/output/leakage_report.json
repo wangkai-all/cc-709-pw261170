@@ -1,0 +1,89 @@
+{
+  "old_generation_id": "gen_58984dbdf59b",
+  "old_freeze_id": "58984dbdf59ba86c70fe447d80f5fb58803eaa3fef341f5ca65fc022c9b6fbe3",
+  "old_relation_version": "relations-v1",
+  "new_relation_version": "relations-v2",
+  "added_relations": [
+    {
+      "rel_id": "rel_merge_C04__S01",
+      "src": "C04",
+      "dst": "S01",
+      "rel_type": "same_as",
+      "active": true
+    }
+  ],
+  "withdrawn_relations": [],
+  "skipped_relations": [],
+  "merged_components": [
+    {
+      "new_group_id": "g_1e81387f4e",
+      "subjects": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "S01"
+      ],
+      "old_group_ids": [
+        "g_601526a1e7",
+        "g_ac7438e86c"
+      ],
+      "old_splits": [
+        "test",
+        "train"
+      ],
+      "edge_ids": [
+        "rel_c01_c02",
+        "rel_c02_c03",
+        "rel_c03_c04",
+        "rel_merge_C04__S01"
+      ],
+      "leakage": true
+    }
+  ],
+  "cross_split_conflicts": [
+    {
+      "new_group_id": "g_1e81387f4e",
+      "subjects": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "S01"
+      ],
+      "old_splits": [
+        "test",
+        "train"
+      ],
+      "old_group_ids": [
+        "g_601526a1e7",
+        "g_ac7438e86c"
+      ],
+      "connecting_edges": [
+        "rel_c01_c02",
+        "rel_c02_c03",
+        "rel_c03_c04",
+        "rel_merge_C04__S01"
+      ],
+      "sample_count": 12,
+      "message": "新关系使 5 个主体连通，而它们在旧清单中分属 test/train；旧清单继续使用将导致训练侧经关系路径接触验证/测试主体"
+    }
+  ],
+  "affected_sample_ids": [
+    "s_C01_1",
+    "s_C01_2",
+    "s_C01_3",
+    "s_C02_1",
+    "s_C02_2",
+    "s_C03_1",
+    "s_C03_2",
+    "s_C04_1",
+    "s_C04_2",
+    "s_S01_1",
+    "s_S01_2",
+    "s_S01_3"
+  ],
+  "affected_sample_count": 12,
+  "leakage": true,
+  "summary": "发现 1 处跨集合连通冲突，涉及 12 个样本；旧清单已保留未改动，请审阅新候选版本后发布"
+}

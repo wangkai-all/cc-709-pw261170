@@ -1,0 +1,48 @@
+{
+  "old_generation_id": "gen_82fb9d01bdc1",
+  "old_freeze_id": "82fb9d01bdc1b06c3f75e50751b833f596d6126ff91d3cb5da4ade3e2c041d59",
+  "old_relation_version": "relations-v1",
+  "new_relation_version": "relations-v2",
+  "added_relations": [
+    {
+      "rel_id": "rel_merge_C04__S01",
+      "src": "C04",
+      "dst": "S01",
+      "rel_type": "same_as",
+      "active": true
+    }
+  ],
+  "withdrawn_relations": [],
+  "skipped_relations": [],
+  "merged_components": [
+    {
+      "new_group_id": "g_1e81387f4e",
+      "subjects": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "S01"
+      ],
+      "old_group_ids": [
+        "g_601526a1e7",
+        "g_ac7438e86c"
+      ],
+      "old_splits": [
+        "test"
+      ],
+      "edge_ids": [
+        "rel_c01_c02",
+        "rel_c02_c03",
+        "rel_c03_c04",
+        "rel_merge_C04__S01"
+      ],
+      "leakage": false
+    }
+  ],
+  "cross_split_conflicts": [],
+  "affected_sample_ids": [],
+  "affected_sample_count": 0,
+  "leakage": false,
+  "summary": "关系发生变化但未造成跨集合连通，旧清单无泄漏风险"
+}

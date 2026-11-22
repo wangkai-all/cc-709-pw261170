@@ -1,0 +1,257 @@
+[
+  {
+    "group_id": "g_c4a2ce1ebe",
+    "subjects": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10"
+    ],
+    "edge_ids": [
+      "rel_house_m01_02",
+      "rel_house_m02_03",
+      "rel_house_m03_04",
+      "rel_house_m04_05",
+      "rel_house_m05_06",
+      "rel_house_m06_07",
+      "rel_house_m07_08",
+      "rel_house_m08_09",
+      "rel_house_m09_10"
+    ],
+    "subject_count": 10,
+    "sample_count": 30,
+    "min_date": "2025-02-10",
+    "max_date": "2025-11-18",
+    "eligible_splits": [
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "test",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-11-18 不满足更早集合，按 shift 规则整组后移到 test，不参与比例分配"
+  },
+  {
+    "group_id": "g_601526a1e7",
+    "subjects": [
+      "C01",
+      "C02",
+      "C03",
+      "C04"
+    ],
+    "edge_ids": [
+      "rel_c01_c02",
+      "rel_c02_c03",
+      "rel_c03_c04"
+    ],
+    "subject_count": 4,
+    "sample_count": 9,
+    "min_date": "2025-01-15",
+    "max_date": "2025-12-03",
+    "eligible_splits": [
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "test",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-12-03 不满足更早集合，按 shift 规则整组后移到 test，不参与比例分配"
+  },
+  {
+    "group_id": "g_217c48f2b7",
+    "subjects": [
+      "S03"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-02-03",
+    "max_date": "2025-05-16",
+    "eligible_splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "crosses_boundary": false,
+    "assigned_split": "train",
+    "quarantined": false,
+    "reason": "大组优先排序后处理（本组 3 个样本）；时间允许集合：train/val/test；分配前各集合缺口 train=39.3, val=1.3, test=-34.6，缺口最大的 train 获配整组"
+  },
+  {
+    "group_id": "g_3193b0ffb0",
+    "subjects": [
+      "S06"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-02-14",
+    "max_date": "2025-08-25",
+    "eligible_splits": [
+      "val",
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "val",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-08-25 不满足更早集合，按 shift 规则整组后移到 val，不参与比例分配"
+  },
+  {
+    "group_id": "g_33829b0e03",
+    "subjects": [
+      "S08"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-01-30",
+    "max_date": "2025-09-02",
+    "eligible_splits": [
+      "val",
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "val",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-09-02 不满足更早集合，按 shift 规则整组后移到 val，不参与比例分配"
+  },
+  {
+    "group_id": "g_3491f905b5",
+    "subjects": [
+      "S04"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-02-18",
+    "max_date": "2025-06-07",
+    "eligible_splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "crosses_boundary": false,
+    "assigned_split": "train",
+    "quarantined": false,
+    "reason": "大组优先排序后处理（本组 3 个样本）；时间允许集合：train/val/test；分配前各集合缺口 train=45.3, val=1.3, test=-34.6，缺口最大的 train 获配整组"
+  },
+  {
+    "group_id": "g_39a6c3d9fd",
+    "subjects": [
+      "S05"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-03-08",
+    "max_date": "2025-06-29",
+    "eligible_splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "crosses_boundary": false,
+    "assigned_split": "train",
+    "quarantined": false,
+    "reason": "大组优先排序后处理（本组 3 个样本）；时间允许集合：train/val/test；分配前各集合缺口 train=42.3, val=1.3, test=-34.6，缺口最大的 train 获配整组"
+  },
+  {
+    "group_id": "g_3d16e90141",
+    "subjects": [
+      "S10"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-03-11",
+    "max_date": "2025-12-15",
+    "eligible_splits": [
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "test",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-12-15 不满足更早集合，按 shift 规则整组后移到 test，不参与比例分配"
+  },
+  {
+    "group_id": "g_4fc42779a8",
+    "subjects": [
+      "S07"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-03-22",
+    "max_date": "2025-10-08",
+    "eligible_splits": [
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "test",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-10-08 不满足更早集合，按 shift 规则整组后移到 test，不参与比例分配"
+  },
+  {
+    "group_id": "g_7e0b7c84ed",
+    "subjects": [
+      "S09"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-02-23",
+    "max_date": "2025-09-22",
+    "eligible_splits": [
+      "val",
+      "test"
+    ],
+    "crosses_boundary": true,
+    "assigned_split": "val",
+    "quarantined": false,
+    "reason": "时间约束优先：组内最晚样本 2025-09-22 不满足更早集合，按 shift 规则整组后移到 val，不参与比例分配"
+  },
+  {
+    "group_id": "g_ac7438e86c",
+    "subjects": [
+      "S01"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-01-08",
+    "max_date": "2025-06-11",
+    "eligible_splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "crosses_boundary": false,
+    "assigned_split": "train",
+    "quarantined": false,
+    "reason": "大组优先排序后处理（本组 3 个样本）；时间允许集合：train/val/test；分配前各集合缺口 train=48.3, val=1.3, test=-34.6，缺口最大的 train 获配整组"
+  },
+  {
+    "group_id": "g_bbe97d1744",
+    "subjects": [
+      "S02"
+    ],
+    "edge_ids": [],
+    "subject_count": 1,
+    "sample_count": 3,
+    "min_date": "2025-01-14",
+    "max_date": "2025-06-25",
+    "eligible_splits": [
+      "train",
+      "val",
+      "test"
+    ],
+    "crosses_boundary": false,
+    "assigned_split": "train",
+    "quarantined": false,
+    "reason": "大组优先排序后处理（本组 3 个样本）；时间允许集合：train/val/test；分配前各集合缺口 train=36.3, val=1.3, test=-34.6，缺口最大的 train 获配整组"
+  }
+]

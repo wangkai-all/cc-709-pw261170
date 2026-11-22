@@ -1,0 +1,4 @@
+sample_id,subject_id,event_date,group_id,amount,channel
+s_S01_1,S01,2025-01-08,g_ac7438e86c,302,web
+s_S01_2,S01,2025-03-19,g_ac7438e86c,303,web
+s_S01_3,S01,2025-06-11,g_ac7438e86c,304,web

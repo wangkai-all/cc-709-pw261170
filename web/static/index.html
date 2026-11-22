@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>训练数据湖 · 可重复数据集划分</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◳</span>
+    <div>
+      <h1>训练数据湖 · 数据集划分工作台</h1>
+      <p class="subtitle">先建关系连通组，再以组为单位分配 · 时间约束优先于比例 · 冻结配置可复现</p>
+    </div>
+  </div>
+  <div class="dataset-picker">
+    <label>当前数据集
+      <select id="dataset-select"><option value="">— 请选择或新建 —</option></select>
+    </label>
+    <button id="btn-refresh" class="btn btn-ghost" title="重新加载">↻</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="data" role="tab">① 数据与配置</button>
+  <button class="tab" data-tab="groups" role="tab">② 连通组与分配解释</button>
+  <button class="tab" data-tab="manifests" role="tab">③ 清单下载</button>
+  <button class="tab" data-tab="revision" role="tab">④ 关系修订与泄漏</button>
+  <button class="tab" data-tab="versions" role="tab">⑤ 版本对比与发布</button>
+</nav>
+
+<main>
+  <!-- ===================== ① 数据与配置 ===================== -->
+  <section class="panel active" id="panel-data">
+    <div class="grid-2">
+      <div class="card">
+        <h2>数据集</h2>
+        <p class="hint">上传样本与关系 CSV，或一键载入内置示例（含超大关联组、三层间接关系、跨时间边界）。</p>
+        <div class="row">
+          <button class="btn" id="btn-load-example">载入内置示例 lake_demo</button>
+        </div>
+        <form id="form-create" class="stack">
+          <label>数据集名称 <input name="name" placeholder="例如 lake_demo" required></label>
+          <label>样本 CSV（列：sample_id, subject_id, event_date, 其余属性透传）
+            <textarea name="samples_csv" rows="5" placeholder="sample_id,subject_id,event_date,amount&#10;s1,C01,2025-01-15,200"></textarea>
+          </label>
+          <label>关系 CSV（列：rel_id, src_subject, dst_subject, rel_type[, active]）
+            <textarea name="relations_csv" rows="5" placeholder="rel_id,src_subject,dst_subject,rel_type&#10;r1,C01,C02,family"></textarea>
+          </label>
+          <button class="btn" type="submit">创建数据集</button>
+        </form>
+        <div id="dataset-meta" class="meta-box hidden"></div>
+      </div>
+
+      <div class="card">
+        <h2>划分配置（冻结项）</h2>
+        <p class="hint">以下全部进入 freeze_id；任何一项变化都会生成新版本，全部不变则结果逐字节一致。</p>
+        <form id="form-config" class="stack">
+          <label>随机种子 seed（整数，只用于确定性平局打破）
+            <input name="seed" type="number" value="20261122">
+          </label>
+          <fieldset>
+            <legend>目标比例（自动归一化）</legend>
+            <div class="ratio-row">
+              <label class="ratio train">训练 <input name="train" type="number" step="0.01" min="0" value="0.70"></label>
+              <label class="ratio val">验证 <input name="val" type="number" step="0.01" min="0" value="0.15"></label>
+              <label class="ratio test">测试 <input name="test" type="number" step="0.01" min="0" value="0.15"></label>
+            </div>
+          </fieldset>
+          <div class="grid-2 tight">
+            <label>训练截止日 train_cutoff（含当天）
+              <input name="train_cutoff" type="date" value="2025-06-30">
+            </label>
+            <label>验证截止日 val_cutoff（含当天）
+              <input name="val_cutoff" type="date" value="2025-09-30">
+            </label>
+          </div>
+          <label>组跨时间边界规则（不拆组）
+            <select name="cross_boundary_rule">
+              <option value="shift">shift：整组后移到最早合格集合</option>
+              <option value="isolate">isolate：整组隔离到 quarantine</option>
+            </select>
+          </label>
+          <label>参与连边的关系类型（留空 = 全部类型）
+            <input name="relation_types" placeholder="例如 family,household，留空用全部">
+          </label>
+          <label>穷举上限（自由组 ≤ 该值时小规模穷举取最优）
+            <input name="exhaustive_limit" type="number" min="0" max="20" value="10">
+          </label>
+          <button class="btn btn-primary" type="submit">生成划分</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ② 连通组与分配解释 ===================== -->
+  <section class="panel" id="panel-groups">
+    <div class="card">
+      <h2>目标 vs 实际比例</h2>
+      <div id="ratio-chart" class="viz-root"></div>
+      <div id="deviation-notes" class="notes"></div>
+    </div>
+    <div class="card">
+      <h2>连通组规模（按样本数降序）</h2>
+      <p class="hint">组是分配的最小单位：条形越长，它一次性带走的样本越多，大组落入任一集合都会显著推动比例偏离目标。</p>
+      <div id="group-chart" class="viz-root"></div>
+    </div>
+    <div class="card">
+      <h2>组级明细与分配理由</h2>
+      <div class="table-wrap">
+        <table id="group-table">
+          <thead><tr>
+            <th>组 ID</th><th>主体数</th><th>样本数</th><th>日期范围</th>
+            <th>跨边界</th><th>时间允许集合</th><th>去向</th><th>分配/隔离理由</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ③ 清单下载 ===================== -->
+  <section class="panel" id="panel-manifests">
+    <div class="card">
+      <h2>三份清单 + 隔离清单</h2>
+      <div id="freeze-box" class="meta-box"></div>
+      <div id="downloads" class="download-grid"></div>
+      <h3>清单预览（前 10 行）</h3>
+      <div class="table-wrap" id="manifest-preview"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ④ 关系修订与泄漏 ===================== -->
+  <section class="panel" id="panel-revision">
+    <div class="grid-2">
+      <div class="card">
+        <h2>关系操作</h2>
+        <p class="hint">修订只写入新版本，旧生成与已发布清单的文件不会被覆盖。</p>
+        <form id="form-withdraw" class="stack">
+          <h3>撤回关系</h3>
+          <label>rel_id <input name="rel_id" placeholder="例如 rel_house_m03_m04"></label>
+          <button class="btn" type="submit">撤回（active=false，关系版递增）</button>
+        </form>
+        <form id="form-merge" class="stack">
+          <h3>合并 / 新增关系（发现两组其实有关联）</h3>
+          <div class="grid-2 tight">
+            <label>主体 A <input name="subject_a" placeholder="C04"></label>
+            <label>主体 B <input name="subject_b" placeholder="S01"></label>
+          </div>
+          <label>关系类型 <input name="rel_type" value="same_as"></label>
+          <button class="btn" type="submit">新增关系并连通两组</button>
+        </form>
+        <div class="row">
+          <button class="btn btn-primary" id="btn-candidate">基于当前修订生成候选版 + 泄漏分析</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>跨集合冲突 / 潜在泄漏</h2>
+        <div id="leakage-box"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>当前关系表</h2>
+      <div class="table-wrap" id="relation-table"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ⑤ 版本对比与发布 ===================== -->
+  <section class="panel" id="panel-versions">
+    <div class="card">
+      <h2>生成历史</h2>
+      <div class="table-wrap">
+        <table id="gen-table">
+          <thead><tr>
+            <th>generation_id</th><th>freeze_id（前 16 位）</th><th>关系版</th>
+            <th>策略</th><th>实际比例</th><th>状态</th><th>创建时间</th><th>操作</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2>新旧分配对比</h2>
+      <div class="row">
+        <select id="compare-old"></select>
+        <select id="compare-new"></select>
+        <button class="btn" id="btn-compare">比较</button>
+      </div>
+      <div id="compare-result"></div>
+    </div>
+    <div class="card">
+      <h2>已发布版本（不可变）</h2>
+      <div id="pub-list" class="pub-list"></div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/app.js"></script>
+</body>
+</html>
